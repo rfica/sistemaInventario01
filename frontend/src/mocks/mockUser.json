@@ -1,0 +1,8 @@
+{
+  "userId": 1,
+  "username": "admin",
+  "email": "admin@inventario.cl",
+  "role": "Administrador",
+  "password": "1234",
+  "token": "JWT123456789"
+}

@@ -1,0 +1,10 @@
+{
+  "closedPeriods": [
+    {
+      "id": 1,
+      "month": "2025-05",
+      "closedBy": "admin",
+      "closedAt": "2025-06-01T00:00:00Z"
+    }
+  ]
+}
