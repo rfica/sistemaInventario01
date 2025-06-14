@@ -18,6 +18,7 @@ const menuItems = [
   { key: '/movimientos', icon: <BarChartOutlined />, label: 'Movimientos' },
   { key: '/categorias', icon: <TagsOutlined />, label: 'Categorías' },
   { key: '/reportes', icon: <BarChartOutlined />, label: 'Reportes' },
+  { key: '/cierre-mes', icon: <BarChartOutlined />, label: 'Cierre de Mes' }, // Agregada opción para Cierre de Mes
 ];
 
 const Dashboard = () => {
