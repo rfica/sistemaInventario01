@@ -37,7 +37,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/stock', stockRoutes);
-app.use('/api/periods', periodRoutes);
+app.use('/api/periods', periodRoutes); // Ensure period routes are mounted at /api/periods
+console.log('Rutas de períodos configuradas en /api/periods');
 
 // Ruta básica de prueba
 app.get('/', (req, res) => {
