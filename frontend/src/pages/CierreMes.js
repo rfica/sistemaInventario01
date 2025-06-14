@@ -13,10 +13,12 @@ const CierreMes = () => {
   }, []);
 
   const fetchClosedPeriods = async () => {
+ console.log('Fetching closed periods...');
     try {
       const data = await periodService.getClosedPeriods();
       setClosedPeriods(data.map(p => p.MonthYear));
     } catch (error) {
+ console.error('Error in fetchClosedPeriods:', error); // More specific error log
       console.error('Error al obtener períodos cerrados:', error);
       setMessage('Error al cargar los períodos cerrados.');
     }
@@ -31,6 +33,7 @@ const CierreMes = () => {
   };
 
   const handleCloseMonth = async () => {
+ console.log('Attempting to close month...');
     if (!selectedMonth || !selectedYear) {
       setMessage('Por favor, selecciona un mes y un año.');
       return;
@@ -38,6 +41,7 @@ const CierreMes = () => {
 
     const monthYearToClose = `${selectedYear}-${selectedMonth.padStart(2, '0')}`;
 
+ console.log('Selected Month:', selectedMonth, 'Selected Year:', selectedYear, 'MonthYear to Close:', monthYearToClose);
     try {
       const responseMessage = await periodService.closePeriod(monthYearToClose);
       setMessage(responseMessage);
@@ -45,6 +49,7 @@ const CierreMes = () => {
       setSelectedYear('');
       fetchClosedPeriods();
     } catch (error) {
+ console.error('Error in handleCloseMonth:', error); // More specific error log
       console.error('Error al cerrar el período:', error);
       setMessage(`Error al cerrar el período: ${error.message}`);
     }

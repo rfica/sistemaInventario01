@@ -4,6 +4,7 @@ const API_URL = '/api/periods'; // Ajusta si tu URL base es diferente
 
 export const getClosedPeriods = async () => {
     try {
+        console.log('periodService: Iniciando getClosedPeriods');
         const response = await fetch(`${API_URL}/closed`);
         if (!response.ok) {
             // Intentar leer el cuerpo del error si está disponible
@@ -12,14 +13,15 @@ export const getClosedPeriods = async () => {
         }
         return response.json();
     } catch (error) {
-        console.error('Error en getClosedPeriods:', error);
+        console.error('periodService: Error en getClosedPeriods:', error);
         throw error; // Propagar el error para ser manejado por el componente
     }
 };
 
 export const closePeriod = async (monthYear) => {
     try {
-        const response = await fetch(`${API_URL}/closePeriod`, {
+        console.log('periodService: Iniciando closePeriod con monthYear', monthYear);
+        const response = await fetch('/api/periods/closePeriod', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +48,7 @@ export const closePeriod = async (monthYear) => {
         return resultText;
 
     } catch (error) {
-        console.error('Error en closePeriod:', error);
+        console.error('periodService: Error en closePeriod:', error);
         throw error; // Propagar el error para ser manejado por el componente
     }
 };
