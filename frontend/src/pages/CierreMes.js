@@ -26,7 +26,7 @@ const CierreMes = () => {
   const fetchClosedPeriods = async () => {
     try {
       // Usar la función del servicio para llamar al backend
-      const data = await periodService.getClosedPeriods(); // This line is kept
+      const data = await periodService.getClosedPeriods();
       setClosedPeriods(data.map(p => p.MonthYear)); // Asumiendo que el backend devuelve un array de objetos con MonthYear
     } catch (error) {
       console.error('Error al obtener períodos cerrados:', error);
@@ -72,33 +72,47 @@ const CierreMes = () => {
   ));
 
   return (
-    <div>
+    <div className="container">
       <h1>Cierre de Mes</h1>
-      {message && <p style={{ color: message.includes('Error') ? 'red' : 'green' }}>{message}</p>}
+      {message && (
+        <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'}`}>
+          {message}
+        </div>
+      )}
 
-      <div>
-        <h2>Seleccionar Mes y Año para Cerrar</h2>
-        <label htmlFor="month-select">Mes:</label>
-        <select id="month-select" value={selectedMonth} onChange={handleMonthChange}>
-          <option value="">Selecciona un mes</option>
-          {monthOptions}
-        </select>
+      <div className="card">
+        <div className="card-header">
+          <h2>Seleccionar Mes y Año para Cerrar</h2>
+        </div>
+        <div className="card-body">
+          <div className="form-group">
+            <label htmlFor="month-select">Mes:</label>
+            <select id="month-select" className="form-control" value={selectedMonth} onChange={handleMonthChange}>
+              <option value="">Selecciona un mes</option>
+              {monthOptions}
+            </select>
+          </div>
 
-        <label htmlFor="year-select" style={{ marginLeft: '10px' }}>Año:</label>
-        <select id="year-select" value={selectedYear} onChange={handleYearChange}>
-          <option value="">Selecciona un año</option>
-          {yearOptions}
-        </select>
+          <div className="form-group" style={{ marginTop: '15px' }}>
+            <label htmlFor="year-select">Año:</label>
+            <select id="year-select" className="form-control" value={selectedYear} onChange={handleYearChange}>
+              <option value="">Selecciona un año</option>
+              {yearOptions}
+            </select>
+          </div>
 
-        <button onClick={handleCloseMonth} style={{ marginLeft: '20px' }}>Cerrar Mes</button>
+          <button onClick={handleCloseMonth} className="btn btn-primary" style={{ marginTop: '20px' }}>Cerrar Mes</button>
+        </div>
       </div>
 
-      <div style={{ marginTop: '30px' }}>
-        <h2>Períodos Cerrados</h2>
-        {closedPeriods.length === 0 ? (
-          <p>No hay períodos cerrados registrados.</p>
-        ) : (
-          <ul>
+      <div className="card" style={{ marginTop: '30px' }}>
+        <h2>Seleccionar Mes y Año para Cerrar</h2>
+        <div className="card-body">
+          <h2>Períodos Cerrados</h2>
+          {closedPeriods.length === 0 ? (
+            <p>No hay períodos cerrados registrados.</p>
+          ) : (
+            <ul className="list-group">
             {closedPeriods.map((period, index) => ( // Asegúrate de que period es el string YYYY-MM
               <li key={index}>{period}</li> // Assuming period is in 'YYYY-MM' format
             ))}

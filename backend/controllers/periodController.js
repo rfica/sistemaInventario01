@@ -13,7 +13,13 @@ exports.getClosedPeriods = async (req, res) => {
  // Si estás usando sql.query directamente, asegúrate de que la configuración global esté lista.
  const result = await sql.query('SELECT MonthYear FROM ClosedPeriod');
 
+ // Asegurarse de que result.recordset es un array antes de enviarlo
+ if (result && Array.isArray(result.recordset)) {
  res.json(result.recordset); // Envía los resultados como JSON
+ } else {
+ // Si no hay recordset o no es un array, devolver un array vacío
+ res.json([]);
+ }
  } catch (err) {
  console.error('Error al obtener períodos cerrados:', err);
  // Podrías querer enviar un mensaje más detallado en desarrollo, pero en producción es mejor ser genérico.
