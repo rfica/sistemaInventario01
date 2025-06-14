@@ -26,9 +26,7 @@ const CierreMes = () => {
   const fetchClosedPeriods = async () => {
     try {
       // Usar la función del servicio para llamar al backend
-      const data = await periodService.getClosedPeriods();
-      // Asumiendo que el backend devuelve un array de objetos con MonthYear, mapear a solo el string
-      const data = await response.json();
+      const data = await periodService.getClosedPeriods(); // This line is kept
       setClosedPeriods(data.map(p => p.MonthYear)); // Asumiendo que el backend devuelve un array de objetos con MonthYear
     } catch (error) {
       console.error('Error al obtener períodos cerrados:', error);
