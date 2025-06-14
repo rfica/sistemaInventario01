@@ -56,14 +56,14 @@ const CierreMes = () => {
   ));
 
   const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 5 }, (_, i) => (
-    <option key={currentYear - i} value={currentYear - i}>
-      {currentYear - i}
+  const yearOptions = Array.from({ length: 2060 - currentYear + 1 }, (_, i) => (
+    <option key={currentYear + i} value={currentYear + i}>
+      {currentYear + i}
     </option>
   ));
 
   return (
-    <div className="container">
+    <div className="container cierre-mes-page">
       <h1>Cierre de Mes</h1>
       {message && (
         <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'}`}>

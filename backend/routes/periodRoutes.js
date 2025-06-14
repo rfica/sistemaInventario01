@@ -6,6 +6,6 @@ const periodController = require('../controllers/periodController'); // Asegúra
 router.get('/closed', periodController.getClosedPeriods);
 
 // Ruta para cerrar un período
-router.post('/close', periodController.closePeriod);
+router.post('/closePeriod', periodController.closePeriod);
 
 module.exports = router;

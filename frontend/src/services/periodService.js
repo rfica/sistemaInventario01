@@ -19,7 +19,7 @@ export const getClosedPeriods = async () => {
 
 export const closePeriod = async (monthYear) => {
     try {
-        const response = await fetch(`${API_URL}/close`, {
+        const response = await fetch(`${API_URL}/closePeriod`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
