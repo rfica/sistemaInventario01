@@ -106,15 +106,14 @@ const CierreMes = () => {
       </div>
 
       <div className="card" style={{ marginTop: '30px' }}>
-        <h2>Seleccionar Mes y Año para Cerrar</h2>
         <div className="card-body">
           <h2>Períodos Cerrados</h2>
           {closedPeriods.length === 0 ? (
             <p>No hay períodos cerrados registrados.</p>
           ) : (
             <ul className="list-group">
-            {closedPeriods.map((period, index) => ( // Asegúrate de que period es el string YYYY-MM
-              <li key={index}>{period}</li> // Assuming period is in 'YYYY-MM' format
+ {closedPeriods.map((period, index) => (
+ <li key={index}>{period}</li>
             ))}
           </ul>
         )}
