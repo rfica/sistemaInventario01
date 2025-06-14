@@ -12,6 +12,7 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const stockRoutes = require('./routes/stockRoutes');
+const periodRoutes = require('./routes/periodRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/stock', stockRoutes);
+app.use('/api/periods', periodRoutes);
 
 // Ruta básica de prueba
 app.get('/', (req, res) => {

@@ -5,6 +5,7 @@ import Productos from './pages/Productos';
 import PrivateRoute from './components/PrivateRoute';
 import Movimientos from './pages/Movimientos';
 import Categorias from './pages/Categorias';
+import CierreMes from './pages/CierreMes'; // Asumo que crearás este archivo
 
 function App() {
   return (
@@ -48,6 +49,15 @@ function App() {
               <Categorias />
             </PrivateRoute>
           } 
+        />
+
+        <Route
+          path="/cierre-mes"
+          element={
+            <PrivateRoute>
+              <CierreMes />
+            </PrivateRoute>
+          }
         />
 
         {/* Redirección por defecto */}
