@@ -117,7 +117,6 @@ const CierreMes = () => {
             ))}
           </ul>
         )}
-    </div>
   );
 }
 export default CierreMes;
