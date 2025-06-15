@@ -117,7 +117,7 @@ const productService = {
         currentStock: product.currentStock // Incluir currentStock en la normalización de búsqueda también si se usa
       }));
     } catch (error) {
-      console.error('Error al buscar productos:\', error);
+      console.error('Error al buscar productos:', error);
       throw error;
     }
   }
