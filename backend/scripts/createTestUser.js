@@ -1,10 +1,7 @@
 const bcrypt = require('bcryptjs');
 // Importa el pool de conexiones de mssql desde tu archivo de configuración
-// const User = require('../models/User'); // Ya no necesitas el modelo Sequelize
+// const User = require('../models/User'); // Ya no necesitas el modelo Sequelize si usas mssql directamente
 const { poolPromise } = require('../config/db'); // O './config/database' si ese es el archivo correcto
-
-async function createTestUser() {
-  try {
     await sequelize.authenticate();
     console.log('Conexión a la base de datos establecida.');
 
@@ -13,9 +10,8 @@ async function createTestUser() {
 
     // Ejecutar la consulta INSERT para crear el usuario
     const result = await pool.request()
-      Username: 'cerrador',
       .input('username', 'cerrador') // Parámetro para el nombre de usuario
-      .input('email', 'cerrador@inventario.local') // Parámetro para el correo
+ .input('email', 'cerrador@inventario.local') // Parámetro para el correo
       .input('passwordHash', hashedPassword) // Parámetro para el hash de la contraseña
       .input('roleId', 2) // Parámetro para el RoleId (2 para Cerrador de Mes)
       .query('INSERT INTO [User] (Username, Email, PasswordHash, RoleId) VALUES (@username, @email, @passwordHash, @roleId)');
