@@ -1,5 +1,5 @@
 // frontend/src/pages/Productos.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, message, Space, Select, Row, Col } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import productService from '../services/productService';
@@ -140,21 +140,21 @@ const Productos = () => {
     setIsModalVisible(true);
   };
 
-  const handleDelete = async (id) => {
- console.log('handleDelete called with ID:', id);
- // Find the product in the current state to check its stock
+  const handleDelete = useCallback(async (id) => {
+    console.log('handleDelete called with ID:', id);
+    // Find the product in the current state to check its stock
     const productToDelete = products.find(p => p.productId === id);
 
     if (productToDelete && productToDelete.currentStock > 0) {
       // If product has stock, show error message directly
       message.error('No se puede eliminar el producto porque tiene movimientos de inventario asociados.');
       return; // Stop the function here
+    } else {
+      // If product has no stock (or not found, although it should be), show the confirmation modal
+      setProductToDeleteId(id);
+      setIsDeleteModalVisible(true);
     }
-
-    // If product has no stock (or not found, although it should be), show the confirmation modal
-    setProductToDeleteId(id);
-    setIsDeleteModalVisible(true);
-  };
+  }, [products]); // Dependency array includes products
 
   const handleConfirmDelete = async () => {
     if (productToDeleteId) {
