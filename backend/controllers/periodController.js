@@ -33,7 +33,7 @@ exports.closePeriod = async (req, res) => {
  const { monthYear } = req.body; // Obtiene monthYear del cuerpo de la solicitud
  // Asumiendo que el ID del usuario autenticado está en req.user.UserId
  // Esto depende de tu middleware de autenticación.
- const userId = req.user ? req.user.UserId : null; // Obtiene el ID del usuario (manejar caso sin autenticación si aplica)
+ const userId = req.user ? req.user.userId : null; // Obtiene el ID del usuario (manejar caso sin autenticación si aplica)
 
  // Validar que monthYear fue proporcionado y tiene el formato esperado 'YYYY-MM'
  console.log(`Datos recibidos: { monthYear: "${monthYear}", userId: ${userId} }`);
