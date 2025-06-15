@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-const { sequelize } = require('../config/database');
+const { sequelize } = require('../config/database'); // Línea corregida
 
 async function createTestUser() {
   try {
@@ -11,22 +11,10 @@ async function createTestUser() {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const testUser = await User.create({
-      Username: 'admin',
-      Email: 'test@inventario.local',
+      Username: 'cerrador',
+      Email: 'cerradort@inventario.local',
       PasswordHash: hashedPassword,
-      RoleId: 1
+      RoleId: 2
     });
 
-    console.log('Usuario de prueba creado:');
-    console.log('Username:', testUser.Username);
-    console.log('Password:', password);
-    console.log('Hash:', testUser.PasswordHash);
-
-    process.exit(0);
-  } catch (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  }
-}
-
-createTestUser(); 
+    console.log('Usuario de prueba creado
