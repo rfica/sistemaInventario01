@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Tag, Input, Space, Button, Popconfirm, message } from 'antd';
+import { Table, Tag, Input, Space, Button, Popconfirm, message, Form } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import stockService from '../services/stockService';
@@ -171,24 +171,28 @@ const MovimientosList = ({ onRefresh }) => {
   return (
     <div>
       <Space style={{ marginBottom: 16 }}>
-        <span>Desde:</span>
-        <DatePicker
-          selected={filterFrom}
-          onChange={date => setFilterFrom(date || new Date())}
-          dateFormat="dd/MM/yyyy"
+ <Form layout="inline">
+ <Form.Item label="Desde:" style={{ marginBottom: 0 }}>
+ <DatePicker
+ selected={filterFrom}
+ onChange={date => setFilterFrom(date || new Date())}
+ dateFormat="dd/MM/yyyy"
+ className="ant-input"
+ showMonthDropdown
+ showYearDropdown
+ />
+ </Form.Item>
+ <Form.Item label="Hasta:" style={{ marginBottom: 0 }}>
+ <DatePicker
+ selected={filterTo}
+ onChange={date => setFilterTo(date || new Date())}
+ dateFormat="dd/MM/yyyy"
           className="ant-input"
-          showMonthDropdown
-          showYearDropdown
+ showMonthDropdown
+ showYearDropdown
         />
-        <span>Hasta:</span>
-        <DatePicker
-          selected={filterTo}
-          onChange={date => setFilterTo(date || new Date())}
-          dateFormat="dd/MM/yyyy"
-          className="ant-input"
-          showMonthDropdown
-          showYearDropdown
-        />
+ </Form.Item>
+ </Form>
         <span>Mostrando movimientos entre las fechas seleccionadas</span>
         <Button onClick={fetchMovements}>Actualizar</Button>
       </Space>
