@@ -13,6 +13,8 @@ const Productos = () => {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [productToDeleteId, setProductToDeleteId] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [searchCategory, setSearchCategory] = useState(null);
   const [form] = Form.useForm();
@@ -138,28 +140,27 @@ const Productos = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log('handleDelete called with ID:', id); // Log 1
-    Modal.confirm({
-      title: 'Confirmar eliminación',
-      content: '¿Está seguro que desea eliminar este producto?',
-      okText: 'Eliminar',
-      okType: 'danger',
-      cancelText: 'Cancelar',
-      onOk: async () => {
-        console.log('Ejecutando onOk para eliminar producto con ID:', id); // Log 2
-        try {
-          console.log('Ejecutando productService.delete para el ID:', id); // Log para verificar ejecución
-          await productService.delete(id);
-          console.log('productService.delete exitoso.'); // Log 3
-          message.success('Producto eliminado correctamente');
-          fetchProducts();
-        } catch (error) {
-          console.error('Error al eliminar producto:', error); // Agregamos console.error para depuración
- message.error(error.response?.data?.message || 'Error al eliminar el producto');
-        }
-      },
-    });
+    console.log('handleDelete called with ID:', id);
+    setProductToDeleteId(id);
+    setIsDeleteModalVisible(true);
+  };
 
+  const handleConfirmDelete = async () => {
+    if (productToDeleteId) {
+      console.log('Attempting to delete product with ID:', productToDeleteId);
+      try {
+        await productService.delete(productToDeleteId);
+        console.log('productService.delete successful.');
+        message.success('Producto eliminado correctamente');
+        fetchProducts();
+      } catch (error) {
+        console.error('Catch in handleDelete:', error);
+        message.error(error.response?.data?.message || 'Error al eliminar el producto');
+      } finally {
+        setIsDeleteModalVisible(false);
+        setProductToDeleteId(null);
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -240,6 +241,18 @@ const Productos = () => {
         }}
       />
 
+      {/* Modal de confirmación de eliminación */}
+      <Modal
+        title="Confirmar eliminación"
+        open={isDeleteModalVisible}
+        onOk={handleConfirmDelete}
+        onCancel={() => setIsDeleteModalVisible(false)}
+        okText="Eliminar"
+        okType="danger"
+        cancelText="Cancelar"
+      >
+        <p>¿Está seguro que desea eliminar este producto?</p>
+      </Modal>
       <Modal
         title={editingProduct ? "Editar Producto" : "Nuevo Producto"}
         open={isModalVisible}
