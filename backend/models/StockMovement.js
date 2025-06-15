@@ -26,6 +26,7 @@ class StockMovement {
                 CreatedAt: movementData.CreatedAt || new Date()
             });
 
+            console.log('StockMovement.create - Value of AccountingDate before SQL query:', movementData.AccountingDate, 'Type:', typeof movementData.AccountingDate);
             const pool = await sql.connect(dbConfig);
             const result = await pool.request()
                 .input('ProductId', sql.Int, movementData.ProductId)

@@ -113,7 +113,7 @@ const MovimientoForm = ({ onSuccess }) => {
         lineNumber: values.lineNumber,
         accountingDate: accountingDate.toISOString().slice(0, 10),
         description: values.description,
-        type: values.type,
+        type: values.type,        
         // userId y createdAt se asignan en backend
       };
       // Llamar al servicio correspondiente
