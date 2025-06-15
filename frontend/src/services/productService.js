@@ -43,7 +43,8 @@ const productService = {
         description: product.Description || product.description,
         categoryId: product.CategoryId || product.categoryId,
         minimumStock: product.MinimumStock || product.minimumStock,
-        createdAt: product.CreatedAt || product.createdAt
+        createdAt: product.CreatedAt || product.createdAt,
+        currentStock: product.currentStock // Incluir currentStock en la normalización
       }));
     } catch (error) {
       console.error('Error al obtener productos:', error);
@@ -98,7 +99,7 @@ const productService = {
   // Función adicional para buscar productos según la documentación
   search: async (queryText) => {
     try {
-      const response = await api.get('/products/search', { 
+      const response = await api.get('/products/search', {
         params: {
           query: queryText
         }
@@ -112,10 +113,11 @@ const productService = {
         description: product.Description || product.description,
         categoryId: product.CategoryId || product.categoryId,
         minimumStock: product.MinimumStock || product.minimumStock,
-        createdAt: product.CreatedAt || product.createdAt
+        createdAt: product.CreatedAt || product.createdAt,
+        currentStock: product.currentStock // Incluir currentStock en la normalización de búsqueda también si se usa
       }));
     } catch (error) {
-      console.error('Error al buscar productos:', error);
+      console.error('Error al buscar productos:\', error);
       throw error;
     }
   }
