@@ -94,7 +94,7 @@ exports.updateProduct = async (req, res) => {
 
     // Validación: No permitir cambiar el código del producto
     if (productCode && productCode !== product.ProductCode) {
- return res.status(400).json({ 
+ return res.status(400).json({
  success: false, 
  message: 'No se puede cambiar el código del producto.' });
     }

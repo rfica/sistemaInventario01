@@ -150,7 +150,8 @@ const Productos = () => {
           message.success('Producto eliminado correctamente');
           fetchProducts();
         } catch (error) {
-          message.error('Error al eliminar el producto');
+          console.error('Error al eliminar producto:', error); // Agregamos console.error para depuración
+ message.error(error.response?.data?.message || 'Error al eliminar el producto');
         }
       },
     });
@@ -252,6 +253,16 @@ const Productos = () => {
               { required: true, message: 'Por favor ingrese el código de producto' },
               { min: 1, message: 'El código de producto no puede estar vacío' }
             ]}
+
+          >
+            {/* El campo de código de producto es de solo lectura cuando se edita un producto existente */}
+            <Input maxLength={50} placeholder="Ingrese el código del producto" readOnly={editingProduct !== null} />
+          </Form.Item>
+          <Form.Item
+            name="name"
+            label="Nombre"
+            rules={[{ required: true, message: 'Por favor ingrese el nombre' }]}
+
           >
             <Input maxLength={50} placeholder="Ingrese el código del producto" />
           </Form.Item>
