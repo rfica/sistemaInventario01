@@ -123,6 +123,7 @@ const MovimientoForm = ({ onSuccess }) => {
         // userId y createdAt se asignan en backend
       };
       // Llamar al servicio correspondiente
+      console.log('MovimientoForm - Sending movementData with accountingDate:', movementData.accountingDate);
       if (["01", "02"].includes(values.type)) {
         await stockService.addStock(movementData);
       } else {
