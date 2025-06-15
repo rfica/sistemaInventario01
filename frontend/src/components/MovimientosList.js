@@ -10,6 +10,7 @@ const MovimientosList = ({ onRefresh }) => {
   const [movements, setMovements] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterDate, setFilterDate] = useState(moment());
+  const [pageSize, setPageSize] = useState(10); // Estado para el tamaño de página
   const [filterFrom, setFilterFrom] = useState(() => new Date());
   const [filterTo, setFilterTo] = useState(() => new Date());
 
@@ -176,6 +177,8 @@ const MovimientosList = ({ onRefresh }) => {
           onChange={date => setFilterFrom(date || new Date())}
           dateFormat="dd/MM/yyyy"
           className="ant-input"
+          showMonthDropdown
+          showYearDropdown
         />
         <span>Hasta:</span>
         <DatePicker
@@ -183,6 +186,8 @@ const MovimientosList = ({ onRefresh }) => {
           onChange={date => setFilterTo(date || new Date())}
           dateFormat="dd/MM/yyyy"
           className="ant-input"
+          showMonthDropdown
+          showYearDropdown
         />
         <span>Mostrando movimientos entre las fechas seleccionadas</span>
         <Button onClick={fetchMovements}>Actualizar</Button>
@@ -192,8 +197,9 @@ const MovimientosList = ({ onRefresh }) => {
         dataSource={filteredMovements}
         rowKey="movementId"
         loading={loading}
-        pagination={{
-          pageSize: 10,
+ pagination={{ // Configuración de paginación
+ pageSize: pageSize, // Usar el estado para el tamaño de página
+ onShowSizeChange: (current, size) => setPageSize(size), // Manejar cambio de tamaño
           showSizeChanger: true,
           showTotal: (total) => `Total: ${total} movimientos`
         }}
