@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 module.exports = (req, res, next) => {
+ console.log('🔑 authMiddleware is executing...', req.method, req.url); // Log to confirm execution
  console.log('Auth middleware: Processing request to', req.originalUrl);
   // Obtener token del header
   const authHeader = req.header('Authorization');
