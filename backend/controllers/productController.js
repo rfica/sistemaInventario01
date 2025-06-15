@@ -6,7 +6,13 @@ const StockMovement = require('../models/StockMovement');
 // Listar todos los productos
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    let products = await Product.findAll();
+
+    // Para cada producto, obtener su stock actual y agregarlo a la respuesta
+    products = await Promise.all(products.map(async (product) => {
+      const currentStock = await StockMovement.getCurrentStock(product.ProductId);
+      return { ...product, currentStock };
+    }));
     res.json(products);
   } catch (error) {
     console.error('Error al obtener productos:', error);

@@ -140,14 +140,23 @@ const Productos = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log('handleDelete called with ID:', id);
+ console.log('handleDelete called with ID:', id);
+ // Find the product in the current state to check its stock
+    const productToDelete = products.find(p => p.productId === id);
+
+    if (productToDelete && productToDelete.currentStock > 0) {
+      // If product has stock, show error message directly
+      message.error('No se puede eliminar el producto porque tiene movimientos de inventario asociados.');
+      return; // Stop the function here
+    }
+
+    // If product has no stock (or not found, although it should be), show the confirmation modal
     setProductToDeleteId(id);
     setIsDeleteModalVisible(true);
   };
 
   const handleConfirmDelete = async () => {
     if (productToDeleteId) {
-      console.log('Attempting to delete product with ID:', productToDeleteId);
       try {
         await productService.delete(productToDeleteId);
         console.log('productService.delete successful.');
