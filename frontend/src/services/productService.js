@@ -90,7 +90,7 @@ const productService = {
       await api.delete(`/products/${id}`);
       return true;
     } catch (error) {
-      console.error('Error al eliminar producto:', error);
+      console.error('Error detallado al eliminar producto:', error.response?.data || error.message || error);
       throw error;
     }
   },

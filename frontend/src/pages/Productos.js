@@ -262,14 +262,6 @@ const Productos = () => {
             name="name"
             label="Nombre"
             rules={[{ required: true, message: 'Por favor ingrese el nombre' }]}
-
-          >
-            <Input maxLength={50} placeholder="Ingrese el código del producto" />
-          </Form.Item>
-          <Form.Item
-            name="name"
-            label="Nombre"
-            rules={[{ required: true, message: 'Por favor ingrese el nombre' }]}
           >
             <Input />
           </Form.Item>
