@@ -1,4 +1,4 @@
-import api from './api'; // Import the configured axios instance
+import api from './productService'; // Import the configured axios instance
 
 export const getClosedPeriods = async () => {
     try {
@@ -15,22 +15,10 @@ export const getClosedPeriods = async () => {
 export const closePeriod = async (monthYear) => {
     try {
         console.log('periodService: Iniciando closePeriod con monthYear', monthYear);
-        const response = await api.post('/periods/closePeriod', { monthYear });
-        console.log('periodService: Resultado de closePeriod', response.data);
-
-        if (!response.ok) {
-            // Intentar parsear como JSON si el error es un objeto JSON
-            try {
-                const errorData = JSON.parse(resultText);
-                throw new Error(errorData.message || `Error al cerrar el período: ${response.status} ${response.statusText}`);
-            } catch (e) {
-                 // Si no es JSON, usar el texto plano del error
-                 throw new Error(resultText || `Error al cerrar el período: ${response.status} ${response.statusText}`);
-            }
-        }
-
-        // Devolver el texto de respuesta (podría ser un mensaje de éxito)
-        return resultText;
+        const response = await api.post('/periods/closePeriod', { monthYear }); // Axios ya maneja la baseURL, headers y body
+        console.log('periodService: Resultado de closePeriod', response.data); // Axios devuelve la data directamente
+        // Axios interceptor manejará errores como 401 automáticamente
+        return response.data; // O response.request.responseText; if backend sends plain text
 
     } catch (error) {
         console.error('periodService: Error en closePeriod:', error);
