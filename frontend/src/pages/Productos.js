@@ -8,6 +8,8 @@ import categoryService from '../services/categoryService';
 const { Option } = Select;
 
 const Productos = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -92,7 +94,7 @@ const Productos = () => {
       console.log('Detalle de productos recibidos del backend:', JSON.stringify(data, null, 2)); // Log para inspeccionar data con detalle
       setProducts(data);
     } catch (error) {
-      message.error('Error al cargar los productos');
+      messageApi.error('Error al cargar los productos');
     } finally {
       setLoading(false);
     }
@@ -102,7 +104,7 @@ const Productos = () => {
     try {
       const data = await categoryService.getAll();
       setCategories(data);
-    } catch (error) {
+    } catch (error) { // Use messageApi.error here too
       message.error('Error al cargar las categorías');
     }
   };
@@ -116,7 +118,7 @@ const Productos = () => {
       const results = await productService.search(params);
       setProducts(results);
     } catch (error) {
-      message.error('Error al buscar productos');
+      messageApi.error('Error al buscar productos');
     } finally {
       setLoading(false);
     }
@@ -149,7 +151,7 @@ const Productos = () => {
 
     if (productToDelete && parseInt(productToDelete.currentStock, 10) > 0) {
       // If product has stock, show error message directly
-      message.error('No se puede eliminar el producto porque tiene movimientos de inventario asociados.');
+      messageApi.error('No se puede eliminar el producto porque tiene movimientos de inventario asociados.');
       return; // Stop the function here
     } else {
       // If product has no stock (or not found, although it should be), show the confirmation modal
@@ -163,10 +165,10 @@ const Productos = () => {
       try {
         await productService.delete(productToDeleteId);
         console.log('productService.delete successful.');
-        message.success('Producto eliminado correctamente');
+        messageApi.success('Producto eliminado correctamente');
         fetchProducts();
       } catch (error) {
-        console.error('Catch in handleDelete:', error);
+        console.error('Error deleting product:', error); // More specific log message
         message.error(error.response?.data?.message || 'Error al eliminar el producto');
       } finally {
         setIsDeleteModalVisible(false);
@@ -182,10 +184,10 @@ const Productos = () => {
       
       if (editingProduct) {
         await productService.update(editingProduct.productId, values);
-        message.success('Producto actualizado correctamente');
+        messageApi.success('Producto actualizado correctamente');
       } else {
         await productService.create(values);
-        message.success('Producto creado correctamente');
+        messageApi.success('Producto creado correctamente');
       }
       setIsModalVisible(false);
       fetchProducts();
@@ -196,6 +198,7 @@ const Productos = () => {
   };
 
   return (
+    <>
     <div className="productos-container">
       <div className="productos-header">
         <h2>Gestión de Productos</h2>
@@ -327,6 +330,8 @@ const Productos = () => {
         </Form>
       </Modal>
     </div>
+    {contextHolder}
+    </>
   );
 };
 
