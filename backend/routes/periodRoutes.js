@@ -11,6 +11,6 @@ router.use((req, res, next) => {
 });
 // Ruta para obtener los períodos cerrados
 router.get('/closed', periodController.getClosedPeriods);
-// Todas las rutas que requieran autenticación deben usar el middleware aquí
-router.post('/closePeriod', authMiddleware, roleMiddleware([1]), periodController.closePeriod); // Aplicar el middleware de rol (asumiendo RoleId 1)
+// Aplicar autenticación y middleware de rol a la ruta de cierre de período
+router.post('/closePeriod', authMiddleware, roleMiddleware([2]), periodController.closePeriod); // Aplicar el middleware de rol para RoleId 2
 module.exports = router;
