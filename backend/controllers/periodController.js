@@ -87,6 +87,7 @@ exports.closePeriod = async (req, res) => {
 
 // Función utilitaria para verificar si un período está cerrado
 exports.isPeriodClosed = async (monthYear) => {
+ console.log(`isPeriodClosed called with monthYear: ${monthYear}`); // Log the received monthYear
  console.log(`--- Verificando si el período ${monthYear} está cerrado ---`);
  if (!monthYear || !/^\d{4}-\d{2}$/.test(monthYear)) {
  console.warn(`Validación de formato fallida para isPeriodClosed: ${monthYear}`);
