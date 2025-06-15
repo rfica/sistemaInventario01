@@ -104,9 +104,9 @@ const MovimientoForm = ({ onSuccess }) => {
         return;
       }
 
-      // Calcular la fecha en UTC antes de construir el objeto movementData
-      const dateString = accountingDate.toISOString().slice(0, 10);
-      const accountingDateUTC = new Date(dateString + 'T00:00:00.000Z');
+      // Crear un objeto Date que represente la medianoche local de la fecha seleccionada
+      const localMidnight = new Date(accountingDate.getFullYear(), accountingDate.getMonth(), accountingDate.getDate());
+      const accountingDateUTC = new Date(localMidnight.getTime() - (localMidnight.getTimezoneOffset() * 60000));
 
       // Construir el objeto de movimiento
       const movementData = {
