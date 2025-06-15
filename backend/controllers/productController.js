@@ -11,6 +11,7 @@ exports.getAllProducts = async (req, res) => {
     // Para cada producto, obtener su stock actual y agregarlo a la respuesta
     products = await Promise.all(products.map(async (product) => {
       const currentStock = await StockMovement.getCurrentStock(product.ProductId);
+      console.log(`Stock actual para producto ${product.ProductId}: ${currentStock}`);
       return { ...product, currentStock };
     }));
     res.json(products);
