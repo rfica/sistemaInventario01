@@ -12,7 +12,17 @@ exports.getAllProducts = async (req, res) => {
     products = await Promise.all(products.map(async (product) => {
       const currentStock = await StockMovement.getCurrentStock(product.ProductId);
       console.log(`Stock actual para producto ${product.ProductId}: ${currentStock}`);
-      return { ...product, currentStock };
+      // Ensure we return a plain object with all necessary properties and the currentStock
+      return {
+        productId: product.ProductId,
+        productCode: product.ProductCode,
+        name: product.Name,
+        description: product.Description,
+        categoryId: product.CategoryId,
+        minimumStock: product.MinimumStock,
+        createdAt: product.CreatedAt, // Include CreatedAt
+        currentStock: currentStock
+      };
     }));
     res.json(products);
   } catch (error) {
