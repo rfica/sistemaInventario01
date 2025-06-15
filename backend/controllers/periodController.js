@@ -1,15 +1,16 @@
 // backend/controllers/periodController.js
 
-const sql = require('mssql'); // Asumiendo que estás usando la librería mssql
+const { sql, poolPromise } = require('../config/db'); // Importar sql y poolPromise desde la configuración de la base de datos
 
 // Función para obtener los períodos cerrados
 exports.getClosedPeriods = async (req, res) => {
  try {
  console.log('--- Iniciando getClosedPeriods ---');
  console.log('Ejecutando consulta SQL: SELECT MonthYear FROM ClosedPeriod');
- const result = await sql.query('SELECT MonthYear FROM ClosedPeriod');
+ const pool = await poolPromise; // Obtener una conexión del pool
+ const result = await pool.request().query('SELECT MonthYear FROM ClosedPeriod'); // Ejecutar la consulta usando el request del pool
  console.log('Resultado de la consulta SQL para getClosedPeriods:', result.recordset);
-
+ 
  // Asegurarse de que result.recordset es un array antes de enviarlo
  if (result && Array.isArray(result.recordset)) {
  res.json(result.recordset); // Envía los resultados como JSON
@@ -49,7 +50,8 @@ exports.closePeriod = async (req, res) => {
  console.log('Verificando si el período ya está cerrado con MonthYear:', monthYear);
 
  // 1. Verificar si el período ya está cerrado
- const checkResult = await sql.query`SELECT COUNT(*) AS count FROM ClosedPeriod WHERE MonthYear = ${monthYear}`;
+    const pool = await poolPromise; // Obtener una conexión del pool
+    const checkResult = await pool.request().input('monthYear', sql.VarChar, monthYear).query('SELECT COUNT(*) AS count FROM ClosedPeriod WHERE MonthYear = @monthYear'); // Usar parámetros para seguridad
  console.log('Ejecutando consulta SQL para verificar período cerrado...');
     console.log('Resultado de la verificación de período cerrado:', checkResult.recordset[0].count);
 
