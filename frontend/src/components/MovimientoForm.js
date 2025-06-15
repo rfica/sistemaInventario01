@@ -104,6 +104,8 @@ const MovimientoForm = ({ onSuccess }) => {
         return;
       }
       // Construir el objeto de movimiento
+      const dateString = accountingDate.toISOString().slice(0, 10);
+      const accountingDateUTC = new Date(dateString + 'T00:00:00.000Z');
       const movementData = {
         productId: values.productId,
         quantity: values.quantity,
@@ -111,7 +113,10 @@ const MovimientoForm = ({ onSuccess }) => {
         amount: values.amount,
         documentNumber: values.documentNumber,
         lineNumber: values.lineNumber,
-        accountingDate: accountingDate.toISOString().slice(0, 10),
+        // Asegurarse de que la fecha se envía en UTC para evitar problemas de zona horaria
+        const dateString = accountingDate.toISOString().slice(0, 10);
+        const accountingDateUTC = new Date(dateString + 'T00:00:00.000Z');
+        accountingDate: accountingDateUTC,
         description: values.description,
         type: values.type,        
         // userId y createdAt se asignan en backend
