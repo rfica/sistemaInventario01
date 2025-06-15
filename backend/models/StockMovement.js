@@ -135,6 +135,18 @@ class StockMovement {
             throw error;
         }
     }
+
+    static async hasMovements(productId) {
+        try {
+            const pool = await sql.connect(dbConfig);
+            const result = await pool.request()
+                .input('ProductId', sql.Int, productId)
+                .query('SELECT TOP 1 1 FROM StockMovement WHERE ProductId = @ProductId');
+            return result.recordset.length > 0;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = StockMovement;

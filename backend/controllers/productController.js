@@ -150,12 +150,14 @@ exports.deleteProduct = async (req, res) => {
       });
     }
     
-    // Validación: No permitir eliminar si tiene movimientos de inventario
-    const currentStock = await StockMovement.getCurrentStock(id);
-    if (currentStock > 0) {
+    // Validación: No permitir eliminar si tiene movimientos de inventario (independientemente del stock final)
+    const hasMovements = await StockMovement.hasMovements(id);
+    if (hasMovements) {
+ // Obtener el stock actual para incluirlo en el mensaje
+ const currentStock = await StockMovement.getCurrentStock(id);
  return res.status(400).json({
  success: false,
- message: 'No se puede eliminar el producto porque tiene movimientos de inventario asociados.'
+ message: `No se puede eliminar el producto ${product.Name} porque tiene movimientos de inventario asociados. Stock actual: ${currentStock}`
       });
     }
 
