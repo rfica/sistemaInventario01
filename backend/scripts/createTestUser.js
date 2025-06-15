@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
-const { sequelize } = require('../config/database'); // Importación corregida
+// Importa el pool de conexiones de mssql desde tu archivo de configuración
+// const User = require('../models/User'); // Ya no necesitas el modelo Sequelize
+const { poolPromise } = require('../config/db'); // O './config/database' si ese es el archivo correcto
 
 async function createTestUser() {
   try {
@@ -10,18 +11,19 @@ async function createTestUser() {
     const password = '123'; // Contraseña temporal para el usuario de prueba
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crear el usuario de prueba 'admin'
-    const testUser = await User.create({
+    // Ejecutar la consulta INSERT para crear el usuario
+    const result = await pool.request()
       Username: 'cerrador',
-      Email: 'cerrador@inventario.local', // Correo temporal
-      PasswordHash: hashedPassword,
-      RoleId: 2// Asignar el RoleId 1 (Admin)
-    });
+      .input('username', 'cerrador') // Parámetro para el nombre de usuario
+      .input('email', 'cerrador@inventario.local') // Parámetro para el correo
+      .input('passwordHash', hashedPassword) // Parámetro para el hash de la contraseña
+      .input('roleId', 2) // Parámetro para el RoleId (2 para Cerrador de Mes)
+      .query('INSERT INTO [User] (Username, Email, PasswordHash, RoleId) VALUES (@username, @email, @passwordHash, @roleId)');
 
-    console.log('Usuario de prueba creado:'); // Línea corregida
-    console.log('Username:', testUser.Username);
+    console.log('Usuario de prueba creado exitosamente.');
+    console.log('Username:', 'cerrador');
     // console.log('Password:', password); // Considera omitir la contraseña por seguridad
-    console.log('Hash:', testUser.PasswordHash);
+    console.log('Hash:', hashedPassword); // Puedes mostrar el hash generado
 
     process.exit(0); // Salir con éxito
   } catch (error) {
