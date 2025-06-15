@@ -28,7 +28,7 @@ exports.addStock = async (req, res) => {
         }
 
         const accountingDate = new Date(AccountingDate);
-        const monthYear = `${accountingDate.getFullYear()}-${(accountingDate.getMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM
+        const monthYear = `${accountingDate.getUTCFullYear()}-${(accountingDate.getUTCMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM using UTC
 
         const closed = await isPeriodClosed(monthYear);
         if (closed) {
@@ -96,7 +96,7 @@ exports.removeStock = async (req, res) => {
         }
 
         const accountingDate = new Date(AccountingDate);
-        const monthYear = `${accountingDate.getFullYear()}-${(accountingDate.getMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM
+        const monthYear = `${accountingDate.getUTCFear()}-${(accountingDate.getUTCMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM using UTC
 
         const closed = await isPeriodClosed(monthYear);
         if (closed) {
