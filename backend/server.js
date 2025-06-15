@@ -4,8 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config/config');
-const dbConfig = require('./config/database');
-const sql = require('mssql');
+const { sql, poolPromise } = require('./config/db'); // Importar sql y poolPromise de db.js
 
 // Importar rutas
 const authRoutes = require('./routes/authRoutes');
@@ -63,7 +62,8 @@ app.use((err, req, res, next) => {
 async function startServer() {
     try {
         // Probar la conexión a la base de datos
-        const pool = await sql.connect(dbConfig);
+        // En lugar de sql.connect, usar poolPromise que ya se conecta al inicio
+        const pool = await poolPromise;
         console.log('✅ Conectado exitosamente a SQL Server');
         
         // Iniciar el servidor

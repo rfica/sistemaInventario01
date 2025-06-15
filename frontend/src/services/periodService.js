@@ -1,11 +1,11 @@
 // frontend/src/services/periodService.js
 
-const API_URL = '/api/periods'; // Ajusta si tu URL base es diferente
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 export const getClosedPeriods = async () => {
     try {
         console.log('periodService: Iniciando getClosedPeriods');
-        const response = await fetch(`${API_URL}/closed`);
+        const response = await fetch(`${API_BASE_URL}/periods/closed`);
         if (!response.ok) {
             // Intentar leer el cuerpo del error si está disponible
             const errorBody = await response.text();
@@ -21,7 +21,7 @@ export const getClosedPeriods = async () => {
 export const closePeriod = async (monthYear) => {
     try {
         console.log('periodService: Iniciando closePeriod con monthYear', monthYear);
-        const response = await fetch('/api/periods/closePeriod', {
+        const response = await fetch(`${API_BASE_URL}/periods/closePeriod`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
