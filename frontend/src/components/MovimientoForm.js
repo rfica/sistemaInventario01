@@ -103,9 +103,12 @@ const MovimientoForm = ({ onSuccess }) => {
         setLoading(false);
         return;
       }
-      // Construir el objeto de movimiento
+
+      // Calcular la fecha en UTC antes de construir el objeto movementData
       const dateString = accountingDate.toISOString().slice(0, 10);
       const accountingDateUTC = new Date(dateString + 'T00:00:00.000Z');
+
+      // Construir el objeto de movimiento
       const movementData = {
         productId: values.productId,
         quantity: values.quantity,
@@ -113,9 +116,7 @@ const MovimientoForm = ({ onSuccess }) => {
         amount: values.amount,
         documentNumber: values.documentNumber,
         lineNumber: values.lineNumber,
-        // Asegurarse de que la fecha se envía en UTC para evitar problemas de zona horaria
-        const dateString = accountingDate.toISOString().slice(0, 10);
-        const accountingDateUTC = new Date(dateString + 'T00:00:00.000Z');
+        // Usar la fecha UTC calculada
         accountingDate: accountingDateUTC,
         description: values.description,
         type: values.type,        
