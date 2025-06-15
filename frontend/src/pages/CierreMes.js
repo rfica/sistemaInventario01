@@ -51,7 +51,13 @@ const CierreMes = () => {
     } catch (error) {
  console.error('Error in handleCloseMonth:', error); // More specific error log
       console.error('Error al cerrar el período:', error);
-      setMessage(`Error al cerrar el período: ${error.message}`);
+      console.log('Detailed error object in handleCloseMonth catch:', error); // Log the full error object
+      // Check if the error is a 403 Forbidden from the backend
+      if (error.response && error.response.status === 403) {
+        setMessage('Usuario sin permiso para cerrar meses.');
+      } else {
+        setMessage(`Error al cerrar el período: ${error.message}`);
+      }
  }
   };
 
