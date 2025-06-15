@@ -10,10 +10,6 @@ router.use((req, res, next) => {
 });
 // Ruta para obtener los períodos cerrados
 router.get('/closed', periodController.getClosedPeriods);
-
-// Ruta para cerrar un período
-router.post('/closePeriod', periodController.closePeriod);
-
 // Todas las rutas que requieran autenticación deben usar el middleware aquí
 router.post('/closePeriod', authMiddleware, periodController.closePeriod);
 module.exports = router;
