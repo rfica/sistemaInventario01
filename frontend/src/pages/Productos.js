@@ -144,6 +144,8 @@ const Productos = () => {
     console.log('handleDelete called with ID:', id);
     // Find the product in the current state to check its stock
     const productToDelete = products.find(p => p.productId === id);
+    console.log('Product to delete found:', productToDelete);
+    console.log('Product currentStock:', productToDelete?.currentStock);
 
     if (productToDelete && productToDelete.currentStock > 0) {
       // If product has stock, show error message directly
