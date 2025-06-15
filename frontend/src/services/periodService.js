@@ -1,4 +1,4 @@
-import api from './productService'; // Import the configured axios instance
+import { api } from './productService'; // Import the configured axios instance by name
 
 export const getClosedPeriods = async () => {
     try {

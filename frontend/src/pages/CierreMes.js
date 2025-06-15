@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import * as periodService from '../services/periodService';
-
+import { getClosedPeriods, closePeriod } from '../services/periodService';
+ // Import the functions by name
 import '../styles/CierreMes.css';
 const CierreMes = () => {
   const [selectedMonth, setSelectedMonth] = useState('');
@@ -15,7 +15,7 @@ const CierreMes = () => {
   const fetchClosedPeriods = async () => {
  console.log('Fetching closed periods...');
     try {
-      const data = await periodService.getClosedPeriods();
+      const data = await getClosedPeriods(); // Use the imported function directly
       setClosedPeriods(data.map(p => p.MonthYear));
     } catch (error) {
  console.error('Error in fetchClosedPeriods:', error); // More specific error log
@@ -43,8 +43,8 @@ const CierreMes = () => {
 
  console.log('Selected Month:', selectedMonth, 'Selected Year:', selectedYear, 'MonthYear to Close:', monthYearToClose);
     try {
-      const responseMessage = await periodService.closePeriod(monthYearToClose);
-      setMessage(responseMessage);
+      const responseMessage = await closePeriod(monthYearToClose); // Use the imported function directly
+      setMessage(responseMessage); // Assuming the backend sends a success message as string
       setSelectedMonth('');
       setSelectedYear('');
       fetchClosedPeriods();
@@ -52,7 +52,7 @@ const CierreMes = () => {
  console.error('Error in handleCloseMonth:', error); // More specific error log
       console.error('Error al cerrar el período:', error);
       setMessage(`Error al cerrar el período: ${error.message}`);
-    }
+ }
   };
 
   const monthOptions = Array.from({ length: 12 }, (_, i) => (
