@@ -89,7 +89,7 @@ const Productos = () => {
     setLoading(true);
     try {
       const data = await productService.getAll();
-      console.log('Productos recibidos del backend:', data); // Log para inspeccionar data
+      console.log('Detalle de productos recibidos del backend:', JSON.stringify(data, null, 2)); // Log para inspeccionar data con detalle
       setProducts(data);
     } catch (error) {
       message.error('Error al cargar los productos');
