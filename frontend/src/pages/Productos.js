@@ -138,6 +138,7 @@ const Productos = () => {
   };
 
   const handleDelete = async (id) => {
+    console.log('handleDelete called with ID:', id); // Log 1
     Modal.confirm({
       title: 'Confirmar eliminación',
       content: '¿Está seguro que desea eliminar este producto?',
@@ -145,8 +146,11 @@ const Productos = () => {
       okType: 'danger',
       cancelText: 'Cancelar',
       onOk: async () => {
+        console.log('Ejecutando onOk para eliminar producto con ID:', id); // Log 2
         try {
+          console.log('Ejecutando productService.delete para el ID:', id); // Log para verificar ejecución
           await productService.delete(id);
+          console.log('productService.delete exitoso.'); // Log 3
           message.success('Producto eliminado correctamente');
           fetchProducts();
         } catch (error) {
@@ -155,6 +159,7 @@ const Productos = () => {
         }
       },
     });
+
   };
 
   const handleSubmit = async () => {
