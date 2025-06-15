@@ -1,6 +1,7 @@
 // backend/controllers/productController.js
 const { validationResult } = require('express-validator');
 const Product = require('../models/Product');
+const StockMovement = require('../models/StockMovement');
 
 // Listar todos los productos
 exports.getAllProducts = async (req, res) => {
@@ -90,6 +91,13 @@ exports.updateProduct = async (req, res) => {
         message: 'Producto no encontrado' 
       });
     }
+
+    // Validación: No permitir cambiar el código del producto
+    if (productCode && productCode !== product.ProductCode) {
+ return res.status(400).json({ 
+ success: false, 
+ message: 'No se puede cambiar el código del producto.' });
+    }
     const updatedProduct = await Product.update(id, {
       ProductCode: productCode,
       Name: name,
@@ -125,6 +133,15 @@ exports.deleteProduct = async (req, res) => {
       });
     }
     
+    // Validación: No permitir eliminar si tiene movimientos de inventario
+    const currentStock = await StockMovement.getCurrentStock(id);
+    if (currentStock > 0) {
+ return res.status(400).json({
+ success: false,
+ message: 'No se puede eliminar el producto porque tiene movimientos de inventario asociados.'
+      });
+    }
+
     await Product.delete(id);
     res.json({ 
       success: true, 
