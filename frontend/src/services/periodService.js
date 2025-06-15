@@ -1,17 +1,11 @@
-// frontend/src/services/periodService.js
-
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+import api from './api'; // Import the configured axios instance
 
 export const getClosedPeriods = async () => {
     try {
         console.log('periodService: Iniciando getClosedPeriods');
-        const response = await fetch(`${API_BASE_URL}/periods/closed`);
-        if (!response.ok) {
-            // Intentar leer el cuerpo del error si está disponible
-            const errorBody = await response.text();
-            throw new Error(`Error al obtener períodos cerrados: ${response.status} ${response.statusText} - ${errorBody}`);
-        }
-        return response.json();
+        const response = await api.get('/periods/closed');
+        console.log('periodService: Resultado de getClosedPeriods', response.data);
+        return response.data;
     } catch (error) {
         console.error('periodService: Error en getClosedPeriods:', error);
         throw error; // Propagar el error para ser manejado por el componente
@@ -21,17 +15,8 @@ export const getClosedPeriods = async () => {
 export const closePeriod = async (monthYear) => {
     try {
         console.log('periodService: Iniciando closePeriod con monthYear', monthYear);
-        const response = await fetch(`${API_BASE_URL}/periods/closePeriod`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Agregar encabezado de autenticación si es necesario
-                // 'Authorization': `Bearer ${tu_token}`
-            },
-            body: JSON.stringify({ monthYear }),
-        });
-
-         const resultText = await response.text(); // Leer el cuerpo de la respuesta como texto
+        const response = await api.post('/periods/closePeriod', { monthYear });
+        console.log('periodService: Resultado de closePeriod', response.data);
 
         if (!response.ok) {
             // Intentar parsear como JSON si el error es un objeto JSON
