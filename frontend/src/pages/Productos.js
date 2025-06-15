@@ -147,7 +147,7 @@ const Productos = () => {
     console.log('Product to delete found:', productToDelete);
     console.log('Product currentStock:', productToDelete?.currentStock);
 
-    if (productToDelete && productToDelete.currentStock > 0) {
+    if (productToDelete && parseInt(productToDelete.currentStock, 10) > 0) {
       // If product has stock, show error message directly
       message.error('No se puede eliminar el producto porque tiene movimientos de inventario asociados.');
       return; // Stop the function here
