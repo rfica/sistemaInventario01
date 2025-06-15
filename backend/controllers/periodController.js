@@ -84,3 +84,23 @@ exports.closePeriod = async (req, res) => {
  }
   console.log('Finalizando closePeriod.');
 };
+
+// Función utilitaria para verificar si un período está cerrado
+exports.isPeriodClosed = async (monthYear) => {
+ console.log(`--- Verificando si el período ${monthYear} está cerrado ---`);
+ if (!monthYear || !/^\d{4}-\d{2}$/.test(monthYear)) {
+ console.warn(`Validación de formato fallida para isPeriodClosed: ${monthYear}`);
+ return false; // Considerar formato inválido como no cerrado o manejar como error
+ }
+
+ try {
+ const pool = await poolPromise;
+ const result = await pool.request()
+ .input('monthYear', sql.VarChar, monthYear)
+ .query('SELECT COUNT(*) AS count FROM ClosedPeriod WHERE MonthYear = @monthYear');
+ return result.recordset[0].count > 0;
+ } catch (err) {
+ console.error(`Error al verificar si el período ${monthYear} está cerrado:`, err.message, err.stack);
+ throw new Error('Error al verificar estado del período.'); // Relanzar o manejar el error según necesites
+ }
+};

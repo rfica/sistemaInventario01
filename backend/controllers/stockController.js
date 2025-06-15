@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const StockMovement = require('../models/StockMovement');
+const { isPeriodClosed } = require('./periodController');
 
 exports.addStock = async (req, res) => {
     const errors = validationResult(req);
@@ -24,6 +25,14 @@ exports.addStock = async (req, res) => {
         // Validar campos obligatorios
         if (!ProductId || !Quantity || !userId || !AccountingDate) {
             return res.status(400).json({ message: 'Faltan campos obligatorios' });
+        }
+
+        const accountingDate = new Date(AccountingDate);
+        const monthYear = `${accountingDate.getFullYear()}-${(accountingDate.getMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM
+
+        const closed = await isPeriodClosed(monthYear);
+        if (closed) {
+            return res.status(400).json({ message: 'No se permiten movimientos de inventario en un período cerrado.' });
         }
 
         // Registrar entrada
@@ -84,6 +93,14 @@ exports.removeStock = async (req, res) => {
         // Validar campos obligatorios
         if (!ProductId || !Quantity || !userId || !AccountingDate) {
             return res.status(400).json({ message: 'Faltan campos obligatorios' });
+        }
+
+        const accountingDate = new Date(AccountingDate);
+        const monthYear = `${accountingDate.getFullYear()}-${(accountingDate.getMonth() + 1).toString().padStart(2, '0')}`; // Format as YYYY-MM
+
+        const closed = await isPeriodClosed(monthYear);
+        if (closed) {
+            return res.status(400).json({ message: 'No se permiten movimientos de inventario en un período cerrado.' });
         }
 
         // Registrar salida o anulación
