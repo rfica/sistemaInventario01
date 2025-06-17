@@ -1,15 +1,47 @@
 {
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    // REMUEVE esta línea completamente:
-    // "proxy": "http://localhost:3000", ← ESTO ES LO QUE CAUSA TU ERROR
-    
-    // Mantén el resto de dependencias...
+    "@ant-design/icons": "^6.0.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.25.4",
+    "axios": "^1.9.0",
+    "date-fns": "^4.1.0",
+    "momento": "^0.2.0",
+    "react": "^19.1.0",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:local": "PORT=3001 REACT_APP_API_URL=http://localhost:3000/api react-scripts start",
     "build": "react-scripts build",
-    // Añade este nuevo script:
-    "start:local": "REACT_APP_API_URL=http://localhost:3000/api react-scripts start",
-    // Resto de scripts...
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
