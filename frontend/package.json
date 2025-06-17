@@ -11,7 +11,6 @@
     "antd": "^5.25.4",
     "axios": "^1.9.0",
     "date-fns": "^4.1.0",
-    "momento": "^0.2.0",
     "react": "^19.1.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.0",
@@ -22,15 +21,21 @@
   "scripts": {
     "start": "react-scripts start",
     "start:local": "PORT=3001 REACT_APP_API_URL=http://localhost:3000/api react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=true react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:ci": "CI=true react-scripts test --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": "warn",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "browserslist": {
     "production": [
