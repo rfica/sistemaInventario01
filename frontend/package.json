@@ -21,12 +21,12 @@
   "scripts": {
     "start": "react-scripts start",
     "start:local": "PORT=3001 REACT_APP_API_URL=http://localhost:3000/api react-scripts start",
-    "build": "CI=false react-scripts build",  // ✅ **Cambiado a CI=false para evitar que los warnings bloqueen el build**
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx",
-    "audit-fix": "npm audit fix --force"  // ✅ **Nuevo script para arreglar vulnerabilidades**
+    "audit-fix": "npm audit fix --force"
   },
   "eslintConfig": {
     "extends": [
@@ -34,8 +34,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-unused-vars": "off",  // ✅ **Desactivado para evitar errores en el build**
-      "react-hooks/exhaustive-deps": "warn"  // ✅ **Mantenido como warning (no crítico)**
+      "no-unused-vars": "off",
+      "react-hooks/exhaustive-deps": "warn"
     }
   },
   "browserslist": {
