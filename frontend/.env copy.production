@@ -1,0 +1,2 @@
+dotenv
+REACT_APP_API_URL=https://tudominioapi.com/api
